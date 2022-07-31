@@ -10,6 +10,7 @@
     "test": "jest",
     "watch-tests": "jest --watch",
     "coverage": "jest --coverage",
+    "lint": "eslint . --fix --ext .tsx,.ts",
     "eject": "react-scripts eject"
   },
   "dependencies": {
