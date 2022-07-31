@@ -51,7 +51,7 @@ export const ContainerView: FC<WithDelegations> = ({
 					<Col span={11} push={2}>
 						<Form.Item
 							name="target"
-							label="Target integer"
+							label="Target number"
 						>
 							<Input
 								value={target}
@@ -72,7 +72,7 @@ export const ContainerView: FC<WithDelegations> = ({
 					<Col span={24}>
 						<Form.Item wrapperCol={{ span : 12 }} style={{ marginTop : "10px" }}>
 							<Button type="primary" htmlType="submit">
-								Submit
+								Calculate
 							</Button>
 						</Form.Item>
 					</Col>

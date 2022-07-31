@@ -23,12 +23,20 @@ describe("<ListResponse />", () => {
 		const ListResponseComponent = render(
 			<ListResponse />
 		);
-		expect(ListResponseComponent).toBeDefined();
+		expect(ListResponseComponent.baseElement).toBeInTheDocument();
 	});
 	it("Should response No match on empty results", () => {
-
+		const ListResponseComponent = render(
+			<ListResponse />
+		);
+		const noMatchText = ListResponseComponent.getByText("No match");
+		expect(noMatchText).toBeVisible();
 	});
-	it("Should be response with results when passed", () => {
-
+	it("Should response with results when passed", () => {
+		const ListResponseComponent = render(
+			<ListResponse results={["13,1"]} />
+		);
+		const matchResults = ListResponseComponent.getByText("13,1");
+		expect(matchResults).toBeVisible();
 	});
 });

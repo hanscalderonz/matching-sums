@@ -1,5 +1,5 @@
-import React      from "react";
-import { render } from "@testing-library/react";
+import React                 from "react";
+import { fireEvent, render } from "@testing-library/react";
 
 // Own imports
 import { Container } from "./Container";
@@ -23,18 +23,32 @@ describe("<Container />", () => {
 		const ContainerComponent = render(
 			<Container />
 		);
-		expect(ContainerComponent).toBeDefined();
+		expect(ContainerComponent.baseElement).toBeInTheDocument();
 	});
-	it("Should calculate results", () => {
+	it("Should print calculated results", async () => {
 		const ContainerComponent = render(
 			<Container />
 		);
-		expect(ContainerComponent).toBeDefined();
+		const inputListOfNumbers = ContainerComponent.getByRole("textbox", { name : "List of numbers" });
+		fireEvent.change(inputListOfNumbers, { target : { value : "13,1" } });
+		const inputTargetNumber = ContainerComponent.getByRole("textbox", { name : "Target number" });
+		fireEvent.change(inputTargetNumber, { target : { value : "14" } });
+		const calculateButton = ContainerComponent.getByRole("button", { name : "Calculate" });
+		fireEvent.submit(calculateButton);
+		const matchResults = await ContainerComponent.findByText("+ 1,13");
+		expect(matchResults).toBeVisible();
 	});
-	it("Should calculate results", () => {
+	it("Should say No match on results when there is no matches sums for target number", async () => {
 		const ContainerComponent = render(
 			<Container />
 		);
-		expect(ContainerComponent).toBeDefined();
+		const inputListOfNumbers = ContainerComponent.getByRole("textbox", { name : "List of numbers" });
+		fireEvent.change(inputListOfNumbers, { target : { value : "13,2" } });
+		const inputTargetNumber = ContainerComponent.getByRole("textbox", { name : "Target number" });
+		fireEvent.change(inputTargetNumber, { target : { value : "14" } });
+		const calculateButton = ContainerComponent.getByRole("button", { name : "Calculate" });
+		fireEvent.submit(calculateButton);
+		const matchResults = await ContainerComponent.findByText("No match");
+		expect(matchResults).toBeVisible();
 	});
 });
