@@ -2,6 +2,7 @@ import React                 from "react";
 import { fireEvent, render } from "@testing-library/react";
 
 // Own imports
+import { act }       from "react-dom/test-utils";
 import { Container } from "./Container";
 
 Object.defineProperty(window, "matchMedia", {
@@ -42,13 +43,15 @@ describe("<Container />", () => {
 		const ContainerComponent = render(
 			<Container />
 		);
-		const inputListOfNumbers = ContainerComponent.getByRole("textbox", { name : "List of numbers" });
-		fireEvent.change(inputListOfNumbers, { target : { value : "13,2" } });
-		const inputTargetNumber = ContainerComponent.getByRole("textbox", { name : "Target number" });
-		fireEvent.change(inputTargetNumber, { target : { value : "14" } });
-		const calculateButton = ContainerComponent.getByRole("button", { name : "Calculate" });
-		fireEvent.submit(calculateButton);
-		const matchResults = await ContainerComponent.findByText("No match");
-		expect(matchResults).toBeVisible();
+		await act(async () => {
+			const inputListOfNumbers = ContainerComponent.getByRole("textbox", { name : "List of numbers" });
+			fireEvent.change(inputListOfNumbers, { target : { value : "13,2" } });
+			const inputTargetNumber = ContainerComponent.getByRole("textbox", { name : "Target number" });
+			fireEvent.change(inputTargetNumber, { target : { value : "14" } });
+			const calculateButton = ContainerComponent.getByRole("button", { name : "Calculate" });
+			fireEvent.submit(calculateButton);
+			const matchResults = await ContainerComponent.findByText("No match");
+			expect(matchResults).toBeVisible();
+		});
 	});
 });
