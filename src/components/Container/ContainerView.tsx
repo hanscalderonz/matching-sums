@@ -1,4 +1,6 @@
-import { FC }   from "react";
+import {
+	FC,
+} from "react";
 import {
 	Button,
 	Card,
@@ -10,8 +12,12 @@ import {
 } from "antd";
 
 // Own imports
-import { WithDelegations } from "../../types";
-import { ListResponse }    from "../ListResponse";
+import {
+	WithDelegations,
+} from "../../types";
+import {
+	ListResponse,
+} from "../ListResponse";
 
 export const ContainerView: FC<WithDelegations> = ({
 	delegations : {
